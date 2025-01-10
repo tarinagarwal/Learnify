@@ -138,11 +138,11 @@ export default function ChapterContent() {
                   code: ({ node, inline, ...props }) =>
                     inline ? (
                       <code
-                        className="bg-transparent px-1 py-0.5 rounded text-sm"
+                        className="bg-[#1e2837] px-1 py-0.5 rounded text-sm"
                         {...props}
                       />
                     ) : (
-                      <pre className="bg-transparent p-4 rounded-md overflow-x-auto">
+                      <pre className="bg-[#1e2837] p-4 rounded-md overflow-x-auto">
                         <code className="text-sm" {...props} />
                       </pre>
                     ),
