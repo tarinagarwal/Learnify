@@ -16,7 +16,7 @@ const groq = new Groq({
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Generate multiple-choice questions based on either a topic or provided content.
@@ -63,17 +63,17 @@ Format the response as a JSON array with each question having the following stru
     return JSON.parse(response);
   } catch (error: any) {
     console.error("Error generating questions:", error);
-    
+
     // Retry logic for 503 errors
-    if (error?.message?.includes('503') && retryCount < MAX_RETRIES) {
+    if (error?.message?.includes("503") && retryCount < MAX_RETRIES) {
       console.log(`Retrying... Attempt ${retryCount + 1} of ${MAX_RETRIES}`);
       await sleep(RETRY_DELAY * (retryCount + 1)); // Exponential backoff
       return generateQuestions(config, retryCount + 1);
     }
-    
+
     throw new Error(
       "Failed to generate questions. Please try again later. " +
-      "If the problem persists, contact support."
+        "If the problem persists, contact support."
     );
   }
 }
@@ -131,7 +131,9 @@ Format longer responses with appropriate Markdown:
 /**
  * Generate a course outline for a given topic
  */
-export async function generateCourseOutline(topic: string): Promise<CourseOutline> {
+export async function generateCourseOutline(
+  topic: string
+): Promise<CourseOutline> {
   try {
     const prompt = `Create a comprehensive course outline for "${topic}". The response should be in JSON format with the following structure:
 {
@@ -201,7 +203,9 @@ Use appropriate Markdown formatting:
       max_tokens: 4096,
     });
 
-    return completion.choices[0]?.message?.content || "Failed to generate content";
+    return (
+      completion.choices[0]?.message?.content || "Failed to generate content"
+    );
   } catch (error) {
     console.error("Error generating chapter content:", error);
     throw new Error("Failed to generate chapter content");
