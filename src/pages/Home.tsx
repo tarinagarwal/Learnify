@@ -36,7 +36,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="bg-gray-100 border-t border-b border-gray-300 py-20 px-4 sm:px-6 lg:px-8">
+        <section className="bg-gray-200 border-t border-white py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">
               Discover Learnify's Key Features
