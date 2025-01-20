@@ -346,7 +346,7 @@ export default function Courses() {
               placeholder="Search courses..."
             />
 
-            <div className="flex gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {/* Bookmark toggle */}
               <Button
                 variant={showBookmarked ? "default" : "outline"}
@@ -585,28 +585,81 @@ export default function Courses() {
 
             {/* Pagination controls */}
             {totalPages > 1 && (
-              <Pagination className="mt-8">
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious onClick={previousPage} />
-                  </PaginationItem>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
-                      <PaginationItem key={page}>
-                        <PaginationLink
-                          onClick={() => goToPage(page)}
-                          isActive={currentPage === page}
-                        >
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    )
-                  )}
-                  <PaginationItem>
-                    <PaginationNext onClick={nextPage} />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
+              <div className="mt-8 overflow-x-auto whitespace-nowrap">
+                <Pagination className="inline-flex items-center gap-2">
+                  <PaginationContent className="flex">
+                    {/* Previous Button */}
+                    <PaginationItem>
+                      <PaginationPrevious onClick={previousPage} />
+                    </PaginationItem>
+
+                    {/* Pages with Ellipsis (show max 3 page numbers: first, current, last) */}
+                    {(() => {
+                      const pagesToShow = [];
+
+                      if (totalPages <= 3) {
+                        // If there are 3 or fewer pages, show them all directly
+                        for (let i = 1; i <= totalPages; i++) {
+                          pagesToShow.push(i);
+                        }
+                      } else {
+                        // Always show first page
+                        pagesToShow.push(1);
+
+                        // If currentPage is greater than 2, we have a gap -> add ellipsis
+                        if (currentPage > 2) {
+                          pagesToShow.push("...");
+                        }
+
+                        // If current is neither the first nor the last, show it
+                        if (currentPage > 1 && currentPage < totalPages) {
+                          pagesToShow.push(currentPage);
+                        }
+
+                        // If currentPage is at least 2 less than totalPages, we have a gap -> add ellipsis
+                        if (currentPage < totalPages - 1) {
+                          pagesToShow.push("...");
+                        }
+
+                        // Always show last page (unless totalPages is 1, but we have the check above)
+                        if (totalPages !== 1) {
+                          pagesToShow.push(totalPages);
+                        }
+                      }
+
+                      // Render pages or ellipses
+                      return pagesToShow.map((page, index) => {
+                        if (page === "...") {
+                          // Render ellipses
+                          return (
+                            //@ts-ignore
+                            <PaginationItem key={`dots-${index}`} disabled>
+                              <span className="px-2">...</span>
+                            </PaginationItem>
+                          );
+                        }
+                        // Render normal page number
+                        return (
+                          <PaginationItem key={page}>
+                            <PaginationLink
+                              //@ts-ignore
+                              onClick={() => goToPage(page)}
+                              isActive={currentPage === page}
+                            >
+                              {page}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      });
+                    })()}
+
+                    {/* Next Button */}
+                    <PaginationItem>
+                      <PaginationNext onClick={nextPage} />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
             )}
           </>
         )}

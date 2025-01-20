@@ -16,78 +16,59 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/"
-          element={
-            <AuthGuard>
-              <Layout>
-                <Home />
-              </Layout>
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/quiz"
-          element={
-            <AuthGuard>
-              <Layout>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/quiz"
+            element={
+              <AuthGuard>
                 <Quiz />
-              </Layout>
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/history"
-          element={
-            <AuthGuard>
-              <Layout>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <AuthGuard>
                 <History />
-              </Layout>
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/resources"
-          element={
-            <AuthGuard>
-              <Layout>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/resources"
+            element={
+              <AuthGuard>
                 <Resources />
-              </Layout>
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/pdf-chat"
-          element={
-            <AuthGuard>
-              <Layout>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/pdf-chat"
+            element={
+              <AuthGuard>
                 <PdfChat />
-              </Layout>
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/courses"
-          element={
-            <AuthGuard>
-              <Layout>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/courses"
+            element={
+              <AuthGuard>
                 <Courses />
-              </Layout>
-            </AuthGuard>
-          }
-        />
-        <Route
-          path="/courses/:courseId/chapters/:chapterId"
-          element={
-            <AuthGuard>
-              <Layout>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/courses/:courseId/chapters/:chapterId"
+            element={
+              <AuthGuard>
                 <ChapterContent />
-              </Layout>
-            </AuthGuard>
-          }
-        />
+              </AuthGuard>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
