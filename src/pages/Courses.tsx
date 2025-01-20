@@ -91,18 +91,19 @@ const Courses: React.FC = () => {
             course_uuid: course.id,
           });
 
+          // Use maybeSingle() instead of single() to handle cases where no rating exists
           const { data: userRating } = await supabase
             .from("course_ratings")
             .select("rating")
             .eq("course_id", course.id)
             .eq("user_id", user.id)
-            .single();
+            .maybeSingle(); // Changed from single() to maybeSingle()
 
           return {
             ...course,
             average_rating: ratingData?.[0]?.average_rating || 0,
             total_ratings: ratingData?.[0]?.total_ratings || 0,
-            user_rating: userRating?.rating,
+            user_rating: userRating?.rating || null, // Changed to handle null case
           };
         })
       );
