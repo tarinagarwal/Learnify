@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Book, Brain, ArrowLeft, Loader2 } from "lucide-react";
+import { Brain, ArrowLeft } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import type { Chapter, Course } from "../types/course";
 import ReactMarkdown from "react-markdown";
