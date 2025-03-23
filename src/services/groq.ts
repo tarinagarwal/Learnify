@@ -36,25 +36,35 @@ export async function generateQuestions(
 Content:
 ${config.pdfContent}
 
-Format the response as a JSON array with each question having the following structure:
-{
-  "question": "the question text",
-  "options": ["option1", "option2", "option3", "option4"],
-  "correctAnswer": "the correct option",
-  "explanation": "explanation why this is the correct answer"
-}`
-        : `Generate ${config.numQuestions} multiple choice questions about ${config.topic} at ${config.difficulty} difficulty level. Format the response as a JSON array with each question having the following structure:
-{
-  "question": "the question text",
-  "options": ["option1", "option2", "option3", "option4"],
-  "correctAnswer": "the correct option",
-  "explanation": "explanation why this is the correct answer"
-}`;
+Respond with a JSON array ONLY. DO NOT include any other text, explanations, or introductions.
+Response must include all the things given in this example format.
+Example format:
+[
+  {
+    "question": "the question text",
+    "options": ["option1", "option2", "option3", "option4"],
+    "correctAnswer": "the correct option",
+    "explanation": "explanation why this is the correct answer"
+  }
+]`
+        : `Generate ${config.numQuestions} multiple choice questions about ${config.topic} at ${config.difficulty} difficulty level. 
+
+Respond with a JSON array ONLY. DO NOT include any other text, explanations, or introductions.
+Response must include all the things given in this example format.
+Example format:
+[
+  {
+    "question": "the question text",
+    "options": ["option1", "option2", "option3", "option4"],
+    "correctAnswer": "the correct option",
+    "explanation": "explanation why this is the correct answer"
+  }
+]`;
 
     // Make API call to generate questions
     const completion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "mixtral-8x7b-32768",
+      model: "llama-3.1-8b-instant",
       temperature: 0.7,
       max_tokens: 2048,
     });
@@ -113,7 +123,7 @@ Format longer responses with appropriate Markdown:
         { role: "system", content: systemPrompt },
         { role: "user", content: userQuestion },
       ],
-      model: "mixtral-8x7b-32768",
+      model: "llama-3.1-8b-instant",
       temperature: 0.7,
       max_tokens: 2048,
     });
@@ -135,7 +145,7 @@ export async function generateCourseOutline(
   topic: string
 ): Promise<CourseOutline> {
   try {
-    const prompt = `Create a comprehensive course outline for "${topic}". The response should be in JSON format with the following structure:
+    const prompt = `Create a comprehensive course outline for "${topic}". Respond with a JSON array ONLY. DO NOT include any other text, explanations, or introductions. Follow the following structure.
 {
   "title": "Course title",
   "description": "A comprehensive description of the course",
@@ -156,7 +166,7 @@ Make sure the outline is:
 
     const completion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "mixtral-8x7b-32768",
+      model: "llama-3.1-8b-instant",
       temperature: 0.7,
       max_tokens: 2048,
     });
@@ -198,7 +208,7 @@ Use appropriate Markdown formatting:
 
     const completion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
-      model: "mixtral-8x7b-32768",
+      model: "llama-3.1-8b-instant",
       temperature: 0.7,
       max_tokens: 4096,
     });
